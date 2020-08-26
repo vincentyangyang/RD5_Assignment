@@ -1,0 +1,20 @@
+create database myBank default character set utf8;
+use myBank;
+
+create table customers(
+    cId int primary key auto_increment,
+    admin varchar(15) not null,
+    password varchar(15) not null,
+    email varchar(100),
+    birthday Date,
+    phone varchar(10) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table detail(
+    cId int primary key,
+    action varchar(5) not null,
+    date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    cash int not null,
+    balance int not null,
+    Remarks varchar(50)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
