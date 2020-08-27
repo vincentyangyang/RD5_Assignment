@@ -57,7 +57,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: #BDB76B;">
 
   <a href="http://localhost:8000/RD5_Assignment/register.php" class="navbar-brand">網銀</a>
 

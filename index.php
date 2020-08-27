@@ -1,6 +1,21 @@
 <?php
-
     session_start();
+
+    if (!isset($_SESSION["login"])){
+        header("Location: login.php");
+        exit();
+    }
+
+    $db = new PDO("mysql:host=127.0.0.1;dbname=myBank", "root", "root");
+    $db->exec("SET CHARACTER SET utf8");
+
+    $sth = $db->prepare("select * from customers where cId = :cId");
+    $sth->bindParam("cId", $_SESSION['id'], PDO::PARAM_INT);    
+    $sth->execute();
+
+    $row = $sth->fetch();
+
+    $db = null;
 
 ?>
 
@@ -111,7 +126,7 @@
         </ul>
 
         <span id="guest">
-        <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['r_login'] ?></a> 
+        <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['login'] ?></a> 
     </span>
     
     </div>
@@ -127,25 +142,24 @@
 
         <div id="information">
 
-            <div id="TD-Box" style="margin-bottom: 40px;">
+            <div id="TD-Box" style="margin-bottom: 60px;">
      
                     <div style="margin-left: 80px;padding-top:30px;">
-                        <p style="float: left;margin-top: 11px;">台幣資產總額</p>
-                        <span class="float-right" style="font-size: 35px;color:	#73B839;margin-right:90px;">132456元</span>
+                        <p style="float: left;margin-top: 15px;">台幣資產總額</p>
+                        <span class="balanceOne" style="font-size: 35px;color: #73B839;margin-right:10px; float:left; padding-left:250px;"></span>
                     </div>
-                    <div> <img src="" alt=""> </div>
-   
+                    <button onclick="hide()" style="border: none;margin-top:15px;" type="button"><img src="eye.png" style="height:20px; width:29px;"> </button>
             </div>
 
-            <hr style="margin-bottom: 15;">
+            <hr style="margin-bottom: 30px;">
 
             <div id="TD-Box" style="">
         
-                <div style="margin-left: 80px;">
-                    <p style="float: left;margin-top: 5px;">活期儲蓄薪資轉帳存款</p>
-                    <span class="float-right" style="font-size: 20px;margin-right:90px;">132456元</span>
+                <div calss="col-6" style="margin-left: 80px;">
+                    <p style="float: left;margin-top: 3px; ">活期儲蓄薪資轉帳存款</p>
+                    <span class="balanceTwo" style="font-size: 20px; margin-right:10px; float:left; padding-left:190px;"></span>
                 </div>
-                <div> <img src="" alt=""> </div>
+                <a href="action.php?action=deposit" class="btn btn-sm btn-outline-success">台幣存款</a>
 
             </div>
 
@@ -159,6 +173,30 @@
 <script>
 
     $('.index').addClass("active");
+
+    var flag = 1;
+
+    display();
+
+    function display(){
+        if (flag == 1){
+            $(".balanceOne").html(<?= $row['balance'] ?>+"<span style='font-size: 25px;'>元</span>");
+            $(".balanceTwo").html(<?= $row['balance'] ?>+"元");
+        }else{
+            $(".balance").html("******");
+        }
+    }
+    
+
+    function hide(){
+        if (flag == 1){
+            flag = 0;
+            display();
+        }else{
+            flag = 1;
+            display();
+        }
+    }
 
 </script>
     

@@ -13,15 +13,37 @@
                 $action = $_POST['action'];
                 $balance = $_POST['balance'];
                 $remarks = $_POST['remarks'];
-                echo($id."+".$money."+".$action."+".$balance."+".$remarks)
-
+                
                 $sth = $db->prepare("insert into detail(cId,action,cash,nowBalance,remarks) values(:cId,:action,:cash,:nowBalance,:remarks)");
-        
+
                 $sth->bindParam("cId", $id, PDO::PARAM_INT);
                 $sth->bindParam("action", $action, PDO::PARAM_STR, 50);
                 $sth->bindParam("cash", $money, PDO::PARAM_INT);
                 $sth->bindParam("nowBalance", $balance, PDO::PARAM_INT);
-                $sth->bindParam("remarks", $remarks, PDO::PARAM_STR,100);
+                $sth->bindParam("remarks", $remarks, PDO::PARAM_STR,1000);
+            
+                $sth->execute();
+
+                $sth = $db->prepare("update customers set balance = :balance where cId = :cId");
+        
+                $sth->bindParam("cId", $id, PDO::PARAM_INT);
+                $sth->bindParam("balance", $balance, PDO::PARAM_INT);
+            
+                $sth->execute();
+            }else{
+                $id = $_POST['id'];
+                $money = $_POST['money'];
+                $action = $_POST['action'];
+                $balance = $_POST['balance'];
+                $remarks = $_POST['remarks'];
+                
+                $sth = $db->prepare("insert into detail(cId,action,cash,nowBalance,remarks) values(:cId,:action,:cash,:nowBalance,:remarks)");
+
+                $sth->bindParam("cId", $id, PDO::PARAM_INT);
+                $sth->bindParam("action", $action, PDO::PARAM_STR, 50);
+                $sth->bindParam("cash", $money, PDO::PARAM_INT);
+                $sth->bindParam("nowBalance", $balance, PDO::PARAM_INT);
+                $sth->bindParam("remarks", $remarks, PDO::PARAM_STR,1000);
             
                 $sth->execute();
 
@@ -32,7 +54,6 @@
             
                 $sth->execute();
             }
-
 
             $db = null;
             exit();
@@ -86,8 +107,8 @@
             $row = $sth->fetch();
         
             if(!empty($row)){
-                $_SESSION["r_login"] = $acc;
-                $_SESSION["r_id"] = $row['cId'];
+                $_SESSION["login"] = $acc;
+                $_SESSION["id"] = $row['cId'];
                 echo 'success';
             }else{
                 echo 'fail';

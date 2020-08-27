@@ -3,6 +3,11 @@
     session_start();
     header("content-type:text/html; charset=utf-8");
 
+    if (!isset($_SESSION["login"])){
+        header("Location: login.php");
+        exit();
+    }
+
     if(isset($_GET['action'])){
         if($_GET['action'] == 'deposit'){
             $action = 'deposit';
@@ -14,7 +19,7 @@
     $db = new PDO("mysql:host=127.0.0.1;dbname=myBank", "root", "root");
     $db->exec("SET CHARACTER SET utf8");
     $sth = $db->prepare("select * from customers where cId = :cId");
-    $sth->bindParam("cId", $_SESSION['r_id'], PDO::PARAM_INT);    
+    $sth->bindParam("cId", $_SESSION['id'], PDO::PARAM_INT);    
     $sth->execute();
 
     $row = $sth->fetch();
@@ -91,6 +96,15 @@
             margin-top: 2px;
             margin-right: 3px;
         }
+
+        #signtwo{
+            width: 10px;
+            height: 20px; 
+            background-color: #00994e;
+            float: left;
+            margin-top: 2px;
+            margin-right: 3px;
+        }
       
       
       
@@ -135,7 +149,7 @@
         </ul>
 
         <span id="guest">
-        <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['r_login'] ?></a> 
+        <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['login'] ?></a> 
     </span>
     
     </div>
@@ -178,7 +192,7 @@
 
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button id="submittwo" name="" value="OK" type="button" onclick="goWithdrawal(<?= $_SESSION['r_id'] ?>)" class="btn btn-success">提出</button>
+                            <button id="submittwo" name="" value="OK" type="button" onclick="goWithdrawal(<?= $_SESSION['id'] ?>)" class="btn btn-success">提出</button>
                             <a href="index.php" class="btn btn-success">取消</a>
                         </div>
                         
@@ -225,14 +239,14 @@
                     <div class="form-group row">
                         <label style="padding-left: 55px;" for="remarks" class="col-4 col-form-label">備註</label> 
                         <div class="col-8">
-                        <textarea name="remarks" id="remarks" cols="27" rows="5" style="resize: none;"> </textarea>
+                        <textarea name="remarks" id="remarks" cols="27" rows="5" style="resize: none;"></textarea>
                         </div>
                     </div>
 
 
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button id="submit" name="" value="OK" type="button" onclick="goDeposit(<?= $_SESSION['r_id'] ?>)"class="btn btn-success">存入</button>
+                            <button id="submit" name="" value="OK" type="button" onclick="goDeposit(<?= $_SESSION['id'] ?>)"class="btn btn-success">存入</button>
                             <a href="index.php" class="btn btn-success">取消</a>
                         </div>
                         
@@ -251,27 +265,45 @@
 
 <script>
 
-    $('.index').addClass("active");
-
-    var action = "<?= $action ?>";
+    var action = "<?= $action ?>";  
 
     if(action == "deposit"){
+        $('.deposit').addClass("active");
         $('#deposit').show();
     }else{
+        $('.withdrawal').addClass("active");
         $('#withdrawal').show();
     }
 
 
     function goWithdrawal(id){
-        var balance = "<?= $row['r_id']?>";
+        var money = parseInt($('#moneytwo').val());
+
+        var balance = parseInt("<?= $row['balance']?>");
         var rule = /[^0]\d+/;
-        var money = $('#moneytwo').val();
+        balance -= money;
+        var remarks = $("#remarkstwo").val();
 
         if (rule.test(money)){
             if(money % 1000 != 0){
                 alert('請輸入1000之倍數');
             }else{
-                //如果大於餘額
+                var dataList = {
+                    id: id,
+                    money: money,
+                    action: 'withdrawal',
+                    balance: balance,
+                    remarks: remarks
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "add.php",
+                    data: dataList,
+                    success: function(e){
+                        // window.location.replace("index.php");  
+                    }
+                })
             }
         }else{
             alert('請輸入有效數值');
@@ -281,11 +313,11 @@
 
     function goDeposit(id){
         var money = parseInt($('#money').val());
+
         var balance = parseInt("<?= $row['balance']?>");
         var rule = /[^0]\d+/;
         balance += money;
         var remarks = $("#remarks").val();
-
 
         if (rule.test(money)){
             if(money % 1000 != 0){
@@ -293,17 +325,17 @@
             }else{
                 var dataList = {
                     id: id,
-                    mnoey: money,
+                    money: money,
                     action: 'deposit',
                     balance: balance,
                     remarks: remarks
                 }
+
                 $.ajax({
                     type: "post",
                     url: "add.php",
                     data: dataList,
                     success: function(e){
-                        alert(e);
                         // window.location.replace("index.php");  
                     }
                 })

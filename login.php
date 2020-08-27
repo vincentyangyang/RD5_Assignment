@@ -4,13 +4,13 @@ session_start();
 
 if (isset($_GET["logout"]))
 {
-  unset($_SESSION["r_login"]);
-  unset($_SESSION["r_id"]);
+  unset($_SESSION["login"]);
+  unset($_SESSION["id"]);
 	header("Location: login.php");
   exit();
 }
 
-if (isset($_SESSION["r_login"])){
+if (isset($_SESSION["login"])){
 
     header("Location: index.php");
     exit();
@@ -74,7 +74,7 @@ if (isset($_SESSION["r_login"])){
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: 	#BDB76B;">
 
   <a href="http://localhost:8000/RD5_Assignment/login.php" class="navbar-brand">網銀</a>
 
