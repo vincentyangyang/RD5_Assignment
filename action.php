@@ -301,7 +301,7 @@
                     url: "add.php",
                     data: dataList,
                     success: function(e){
-                        // window.location.replace("index.php");  
+                        window.location.replace("detail.php");  
                     }
                 })
             }
@@ -336,7 +336,7 @@
                     url: "add.php",
                     data: dataList,
                     success: function(e){
-                        // window.location.replace("index.php");  
+                        window.location.replace("detail.php");  
                     }
                 })
             }

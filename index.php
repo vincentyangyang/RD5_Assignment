@@ -82,7 +82,18 @@
             margin-top: 2px;
             margin-right: 3px;
         }
-      
+
+        #eye{
+            position: absolute;
+            right: 0px;
+            margin-right:100px; 
+        }
+
+        #TWDdeposit{
+            position: absolute;
+            right: 0px;
+            margin-right:110px; 
+        }
       
       
       </style>
@@ -146,9 +157,9 @@
      
                     <div style="margin-left: 80px;padding-top:30px;">
                         <p style="float: left;margin-top: 15px;">台幣資產總額</p>
-                        <span class="balanceOne" style="font-size: 35px;color: #73B839;margin-right:10px; float:left; padding-left:250px;"></span>
+                        <span class="balanceOne"></span>
                     </div>
-                    <button onclick="hide()" style="border: none;margin-top:15px;" type="button"><img src="eye.png" style="height:20px; width:29px;"> </button>
+                    <button id="eye" onclick="hide()" style="border: none;margin-top:15px;" type="button"><img src="eye.png" style="height:20px; width:29px;"> </button>
             </div>
 
             <hr style="margin-bottom: 30px;">
@@ -157,9 +168,10 @@
         
                 <div calss="col-6" style="margin-left: 80px;">
                     <p style="float: left;margin-top: 3px; ">活期儲蓄薪資轉帳存款</p>
-                    <span class="balanceTwo" style="font-size: 20px; margin-right:10px; float:left; padding-left:190px;"></span>
+                    <span class="balanceTwo"></span>
+                    <a id="TWDdeposit" href="action.php?action=deposit" class="btn btn-sm btn-outline-success">台幣存款</a>
                 </div>
-                <a href="action.php?action=deposit" class="btn btn-sm btn-outline-success">台幣存款</a>
+                
 
             </div>
 
@@ -174,16 +186,23 @@
 
     $('.index').addClass("active");
 
-    var flag = 1;
+    var flag = "<?= $row['display'] ?>";
 
     display();
 
     function display(){
         if (flag == 1){
+            $(".balanceOne").prop("style","");
+            $(".balanceTwo").prop("style","");
             $(".balanceOne").html(<?= $row['balance'] ?>+"<span style='font-size: 25px;'>元</span>");
             $(".balanceTwo").html(<?= $row['balance'] ?>+"元");
+            $(".balanceOne").css({"font-size": "35px","color": "#73B839","margin-right":"10px","float":"left","padding-left":"250px"});
+            $(".balanceTwo").css({"font-size": "20px","float":"left","padding-left":"190px"});
         }else{
-            $(".balance").html("******");
+            $(".balanceOne").html("*******");
+            $(".balanceTwo").html("*******");
+            $(".balanceOne").css({"font-size": "35px","color": "#73B839","margin-right":"10px","float":"left","padding-left":"270px","margin-top":"10px"});
+            $(".balanceTwo").css({"font-size": "20px","float":"left","padding-left":"210px","margin-top":"7px"});
         }
     }
     
@@ -192,9 +211,21 @@
         if (flag == 1){
             flag = 0;
             display();
+            $.ajax({
+
+                type: "post",
+                url: "hideBalance.php",
+                data: {display: 0}
+            })
         }else{
             flag = 1;
             display();
+
+            $.ajax({
+                type: "post",
+                url: "hideBalance.php",
+                data: {display: 1}
+            })
         }
     }
 
