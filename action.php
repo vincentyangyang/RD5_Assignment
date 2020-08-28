@@ -116,7 +116,7 @@
 
     <nav class="navbar navbar-expand-md navbar-light" style="background-color: 	#BDB76B;">
 
-    <a href="http://localhost:8000/PID_Assignment/admin_members.php" class="navbar-brand">網銀</a>
+    <a href="http://localhost:8000/RD5_Assignment/index.php" class="navbar-brand">網銀</a>
 
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -278,36 +278,41 @@
 
     function goWithdrawal(id){
         var money = parseInt($('#moneytwo').val());
-
         var balance = parseInt("<?= $row['balance']?>");
-        var rule = /[^0]\d+/;
-        balance -= money;
-        var remarks = $("#remarkstwo").val();
 
-        if (rule.test(money)){
-            if(money % 1000 != 0){
-                alert('請輸入1000之倍數');
-            }else{
-                var dataList = {
-                    id: id,
-                    money: money,
-                    action: 'withdrawal',
-                    balance: balance,
-                    remarks: remarks
-                }
+        if(money < balance){
+            var rule = /[^0]\d+/;
+            balance -= money;
+            var remarks = $("#remarkstwo").val();
 
-                $.ajax({
-                    type: "post",
-                    url: "add.php",
-                    data: dataList,
-                    success: function(e){
-                        window.location.replace("detail.php");  
+            if (rule.test(money)){
+                if(money % 1000 != 0){
+                    alert('請輸入1000之倍數');
+                }else{
+                    var dataList = {
+                        id: id,
+                        money: money,
+                        action: 'withdrawal',
+                        balance: balance,
+                        remarks: remarks
                     }
-                })
+
+                    $.ajax({
+                        type: "post",
+                        url: "add.php",
+                        data: dataList,
+                        success: function(e){
+                            window.location.replace("detail.php");  
+                        }
+                    })
+                }
+            }else{
+                alert('請輸入有效數值');
             }
         }else{
-            alert('請輸入有效數值');
+            alert('餘額不足');
         }
+
 
     }
 
