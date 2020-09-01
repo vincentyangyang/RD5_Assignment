@@ -4,13 +4,13 @@ session_start();
 
 if (isset($_GET["logout"]))
 {
-  unset($_SESSION["login"]);
-  unset($_SESSION["id"]);
+  unset($_SESSION["bank_login"]);
+  unset($_SESSION["bank_id"]);
 	header("Location: login.php");
   exit();
 }
 
-if (isset($_SESSION["login"])){
+if (isset($_SESSION["bank_login"])){
 
     header("Location: index.php");
     exit();

@@ -2,7 +2,7 @@
     session_start();
     header("content-type:text/html; charset=utf-8");
 
-    if (!isset($_SESSION["login"])){
+    if (!isset($_SESSION["bank_login"])){
       header("Location: admin_login.php");
       exit();
     }
@@ -11,7 +11,7 @@
     $db->exec("SET CHARACTER SET utf8");
 
     $sth = $db->prepare("select * from detail where cId = :cId ORDER BY date DESC");
-    $sth->bindParam("cId", $_SESSION['id'], PDO::PARAM_INT);    
+    $sth->bindParam("cId", $_SESSION['bank_id'], PDO::PARAM_INT);    
     $sth->execute();
 
     $db = null;
@@ -24,9 +24,10 @@
 <html lang="en">
 
     <head>
-    <title>Bootstrap Example</title>
+    <title>明細</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -104,7 +105,7 @@
     </ul>
 
     <span id="guest">
-    <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['login'] ?></a> 
+    <a href="index.php" class="btn btn-outline-light btn-sm">你好！<?= $_SESSION['bank_login'] ?></a> 
 </span>
 
 </div>

@@ -8,7 +8,7 @@
         $db->exec("SET CHARACTER SET utf8");
 
         $sth = $db->prepare("update customers set display = :display where cId = :cId");
-        $sth->bindParam("cId", $_SESSION['id'], PDO::PARAM_INT);    
+        $sth->bindParam("cId", $_SESSION['bank_id'], PDO::PARAM_INT);    
         $sth->bindParam("display", $_POST['display'], PDO::PARAM_INT);   
         $sth->execute();
 

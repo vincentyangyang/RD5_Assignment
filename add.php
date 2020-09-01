@@ -107,8 +107,8 @@
             $row = $sth->fetch();
         
             if(!empty($row)){
-                $_SESSION["login"] = $acc;
-                $_SESSION["id"] = $row['cId'];
+                $_SESSION["bank_login"] = $acc;
+                $_SESSION["bank_id"] = $row['cId'];
                 echo 'success';
             }else{
                 echo 'fail';
