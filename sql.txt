@@ -1,0 +1,79 @@
+create database myBank default character set utf8;
+use myBank;
+
+-- phpMyAdmin SQL Dump
+-- version 4.9.3
+-- https://www.phpmyadmin.net/
+--
+-- 主機： 127.0.0.1:3306
+-- 產生時間： 2020 年 09 月 02 日 02:40
+-- 伺服器版本： 5.7.26
+-- PHP 版本： 7.4.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- 資料庫： `myBank`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `customers`
+--
+
+CREATE TABLE `customers` (
+  `cId` int(11) NOT NULL,
+  `admin` varchar(15) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(10) NOT NULL,
+  `balance` int(11) NOT NULL DEFAULT '0',
+  `display` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `customers`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `detail`
+--
+
+CREATE TABLE `detail` (
+  `cId` int(11) NOT NULL,
+  `action` varchar(10) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cash` int(11) NOT NULL,
+  `nowBalance` int(11) NOT NULL,
+  `remarks` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `detail`
+--
+
+
+--
+-- 已傾印資料表的索引
+--
+
+--
+-- 資料表索引 `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`cId`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `cId` int(11) NOT NULL AUTO_INCREMENT;

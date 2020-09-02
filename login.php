@@ -101,7 +101,7 @@ if (isset($_SESSION["bank_login"])){
 <div class="form-group row">
     <label for="pass" class="col-4 col-form-label float-right"><span class="float-right">密碼</span></label> 
     <div class="col-4">
-        <input id="pass" name="pass" type="text" class="form-control" value=""  placeholder="請輸入密碼" pattern="\w{7,}">
+        <input id="pass" name="pass" type="password" class="form-control" value=""  placeholder="請輸入密碼" pattern="\w{7,}">
     </div>
 </div>
 
@@ -142,6 +142,7 @@ if (isset($_SESSION["bank_login"])){
         url: "add.php",
         data: dataList,
         success: function(msg) {
+          console.log(msg);
           if (msg=="success"){
             window.location.href="index.php";
           }else if (msg=="fail"){

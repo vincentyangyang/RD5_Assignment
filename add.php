@@ -4,9 +4,11 @@
     $db = new PDO("mysql:host=127.0.0.1;dbname=myBank", "root", "root");
     $db->exec("SET CHARACTER SET utf8");
 
-    //登入,驗證
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        if(isset($_POST['action'])){
+        
+        //存款,提款
+        if(isset($_POST['action'])){  
             if($_POST['action'] == 'deposit'){
                 $id = $_POST['id'];
                 $money = $_POST['money'];
@@ -62,6 +64,7 @@
         if(isset($_POST['register'])){
             $admin = $_POST['admin'];
             $pass = $_POST['pass'];
+            $pass = password_hash($pass,PASSWORD_BCRYPT);
             $email = $_POST['email'];
             $birthday = $_POST['birthday'];
             $phone = $_POST['phone'];
@@ -77,10 +80,11 @@
             if(!empty($row)){
               echo 'exist';
             }else{
+                echo strlen($pass);
               $sth = $db->prepare("insert into customers (admin, password, email, birthday, phone) values (:admin, :pass, :email, :birthday, :phone)");
         
               $sth->bindParam("admin", $admin, PDO::PARAM_STR, 50);
-              $sth->bindParam("pass", $pass, PDO::PARAM_STR, 50);
+              $sth->bindParam("pass", $pass, PDO::PARAM_STR, 100);
               $sth->bindParam("email", $email, PDO::PARAM_STR, 50);
               $sth->bindParam("birthday", $birthday, PDO::PARAM_STR, 50);
               $sth->bindParam("phone", $phone, PDO::PARAM_STR,50);
@@ -97,16 +101,15 @@
             $acc = $_POST['admin'];
             $pass = $_POST['pass'];
      
-            $sth = $db->prepare("select * from customers where admin = :admin and password = :pass");
-        
+            $sth = $db->prepare("select cId,password from customers where admin = :admin");
             $sth->bindParam("admin", $acc, PDO::PARAM_STR, 50);
-            $sth->bindParam("pass", $pass, PDO::PARAM_STR, 50);
-        
             $sth->execute();
         
             $row = $sth->fetch();
+
+            $re = password_verify($pass,$row['password']);
         
-            if(!empty($row)){
+            if($re){
                 $_SESSION["bank_login"] = $acc;
                 $_SESSION["bank_id"] = $row['cId'];
                 echo 'success';
