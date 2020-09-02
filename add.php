@@ -64,7 +64,7 @@
         if(isset($_POST['register'])){
             $admin = $_POST['admin'];
             $pass = $_POST['pass'];
-            $pass = password_hash($pass,PASSWORD_BCRYPT);
+            $pass = password_hash($pass,PASSWORD_DEFAULT);
             $email = $_POST['email'];
             $birthday = $_POST['birthday'];
             $phone = $_POST['phone'];

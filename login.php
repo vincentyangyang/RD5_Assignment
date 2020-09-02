@@ -15,10 +15,6 @@ if (isset($_SESSION["bank_login"])){
     header("Location: index.php");
     exit();
 
-}else{
-
-
-
 }
 
 ?>
