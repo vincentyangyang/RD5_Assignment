@@ -37,6 +37,7 @@ if (isset($_SESSION["bank_login"])){
       body{
         padding: 0;
         margin: 0;
+        background-color: #FFF5EE;
       }
       .navbar-nav{
         margin-left: 60px;

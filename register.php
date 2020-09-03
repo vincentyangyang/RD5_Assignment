@@ -21,6 +21,7 @@
       body{
         padding: 0;
         margin: 0;
+        background-color: #FFF5EE;
       }
       #navbarCollapse{
         position: relative;
