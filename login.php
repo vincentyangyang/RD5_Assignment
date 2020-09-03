@@ -1,21 +1,22 @@
 <?php
 
-session_start();
 
-if (isset($_GET["logout"]))
-{
-  unset($_SESSION["bank_login"]);
-  unset($_SESSION["bank_id"]);
-	header("Location: login.php");
-  exit();
-}
+      session_start();
 
-if (isset($_SESSION["bank_login"])){
+      if (isset($_GET["logout"]))
+      {
+        unset($_SESSION["bank_login"]);
+        unset($_SESSION["bank_id"]);
+        header("Location: login.php");
+        exit();
+      }
 
-    header("Location: index.php");
-    exit();
+      if (isset($_SESSION["bank_login"])){
 
-}
+          header("Location: index.php");
+          exit();
+
+      }
 
 ?>
 
@@ -25,15 +26,15 @@ if (isset($_SESSION["bank_login"])){
     <meta charset="utf-8">
     <title>用戶登錄</title>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>    
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
 
     <style>
+
       body{
         padding: 0;
         margin: 0;
@@ -71,59 +72,62 @@ if (isset($_SESSION["bank_login"])){
 </head>
 
 <body>
-<nav class="navbar navbar-expand-md navbar-light" style="background-color: 	#BDB76B;">
-
-  <a href="http://localhost:8000/RD5_Assignment/login.php" class="navbar-brand">網銀</a>
-
-  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
 
+    <nav class="navbar navbar-expand-md navbar-light" style="background-color: 	#BDB76B;">
 
-</nav>
+        <a href="http://localhost:8000/RD5_Assignment/login.php" class="navbar-brand">網銀</a>
 
-<div style="margin-top: 50px;" class="container">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-<form method="post">
+    </nav>
+
+    <div style="margin-top: 50px;" class="container">
+
+        <form method="post">
+
+          <div class="form-group row">
+              <label for="admin" class="col-4 col-form-label"><span class="float-right">帳號</span></label> 
+              <div class="col-4">
+                  <input id="admin" name="admin" type="text" class="form-control" value=""  placeholder="請輸入帳號" pattern="\w{7,}">
+              </div>
+          </div>
+
+          <div class="form-group row">
+              <label for="pass" class="col-4 col-form-label float-right"><span class="float-right">密碼</span></label> 
+              <div class="col-4">
+                  <input id="pass" name="pass" type="password" class="form-control" value=""  placeholder="請輸入密碼" pattern="\w{7,}">
+              </div>
+          </div>
 
 
-<div class="form-group row">
-    <label for="admin" class="col-4 col-form-label"><span class="float-right">帳號</span></label> 
-    <div class="col-4">
-        <input id="admin" name="admin" type="text" class="form-control" value=""  placeholder="請輸入帳號" pattern="\w{7,}">
+
+          <div class="form-group row">
+              <div class="offset-4 col-8">
+                  <button id="submit" name="" value="OK" type="button" class="btn btn-success">登入</button>
+                  <button name="cancel" value="cancel" type="button" class="btn btn-success" onclick="window.location.href='register.php'">註冊</button>
+              </div>
+              
+          </div>
+
+
+        </form>
+
+        <div id="fail" class="text-center"> </div>
+
+
     </div>
-</div>
 
-<div class="form-group row">
-    <label for="pass" class="col-4 col-form-label float-right"><span class="float-right">密碼</span></label> 
-    <div class="col-4">
-        <input id="pass" name="pass" type="password" class="form-control" value=""  placeholder="請輸入密碼" pattern="\w{7,}">
+
+    <div class="footer fixed-bottom">
+      Ching Yo© 2020. All Rights Reserved
     </div>
-</div>
 
 
 
-<div class="form-group row">
-    <div class="offset-4 col-8">
-        <button id="submit" name="" value="OK" type="button" class="btn btn-success">登入</button>
-        <button name="cancel" value="cancel" type="button" class="btn btn-success" onclick="window.location.href='register.php'">註冊</button>
-    </div>
-    
-</div>
 
-
-</form>
-
-<div id="fail" class="text-center"> </div>
-
-
-</div>
-
-
-<div class="footer fixed-bottom">
-  Ching Yo© 2020. All Rights Reserved
-</div>
 
   <script type="text/javascript">
 
@@ -152,5 +156,7 @@ if (isset($_SESSION["bank_login"])){
     
 
   </script>
+
+  
 </body>
 </html>
