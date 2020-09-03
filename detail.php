@@ -3,7 +3,7 @@
     header("content-type:text/html; charset=utf-8");
 
     if (!isset($_SESSION["bank_login"])){
-      header("Location: admin_login.php");
+      header("Location: login.php");
       exit();
     }
 
