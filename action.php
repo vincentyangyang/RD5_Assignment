@@ -285,7 +285,7 @@
             balance -= money;
             var remarks = $("#remarkstwo").val();
 
-            if (rule.test(money)){
+            if (money > 0 && rule.test(money)){
                 if(money % 1000 != 0){
                     alert('請輸入1000之倍數');
                 }else{
@@ -324,7 +324,7 @@
         balance += money;
         var remarks = $("#remarks").val();
 
-        if (rule.test(money)){
+        if (money > 0 &&  rule.test(money)){
             if(money % 1000 != 0){
                 alert('請輸入1000之倍數');
             }else{
