@@ -67,6 +67,8 @@ class testController extends Controller
             $att['birthday'] = $request->input('birthday');
             $att['phone'] = $request->input('phone');
 
+            // Customer::create($att);
+
             // $c = new Customer;
 
             // $c->admin = $request->input('admin');
@@ -76,8 +78,7 @@ class testController extends Controller
             // $c->phone = $request->input('phone');
             // $c->save();
             
-            
-            // Customer::create($att);
+
             DB::insert('insert into customers (admin,password,email,birthday,phone) values (?,?,?,?,?)', 
                 [$att['admin'],$att['password'],$att['email'],$att['birthday'],$att['phone']]);
         }
