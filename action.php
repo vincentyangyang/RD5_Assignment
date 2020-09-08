@@ -280,7 +280,7 @@
         var money = parseInt($('#moneytwo').val());
         var balance = parseInt("<?= $row['balance']?>");
 
-        if(money < balance){
+        if(money <= balance){
             var rule = /[^0]\d+/;
             balance -= money;
             var remarks = $("#remarkstwo").val();

@@ -252,12 +252,12 @@
       }
     }); 
 
-
+    //提款
     $('#withdrawalOK').on('click',function(event){
         var money = parseInt($('#moneytwo').val());
         var balance = "{{ $customer['balance'] }}"
 
-        if(money < balance){
+        if(money <= balance){
             var rule = /[^0]\d+/;
 
             if (money > 0 && rule.test(money)){
@@ -280,7 +280,7 @@
         }
     })
 
-
+    //存款
     $('#depositOK').on('click',function(event){
         var money = parseInt($('#money').val());
         var rule = /[^0]\d+/;
