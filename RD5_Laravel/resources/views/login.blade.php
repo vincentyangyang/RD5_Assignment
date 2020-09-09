@@ -69,6 +69,8 @@
     });
 
     $('#submit').on('click',function(){
+        $('#fail').html("");
+
         var dataList = {
           admin: $('#admin').val(),
           pass: $('#pass').val()
